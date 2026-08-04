@@ -54,20 +54,4 @@ included in this package since they're local runtime state.
 - Photo identification uses ORB descriptor matching against the images in
   `static/pokemon_images/` — a clear, well-lit, close-up photo works best.
 
-## What was cleaned up
 
-This package was reorganized from a working folder that had accumulated
-scratch files during development. Removed:
-
-- `__pycache__/` — compiled bytecode, regenerated automatically
-- `pokedex.db`, `team.txt`, `storage.txt` — runtime-generated data
-- `uploads/` — temporary photos captured during testing
-- `Project expreminets/` — an earlier, superseded copy of the `static/` folder
-- `project minimization.py` and `expriments` — earlier CLI-only prototypes
-  that were replaced by the FastAPI app in `main.py`
-
-`project_minimization.py` was renamed to `main.py` (it's the real app
-entry point — an orphaned `main.cpython-312.pyc` in the old `__pycache__`
-suggests that was the original name). `web1/` was renamed to `templates/`
-and the Pokedex data files were moved into `data/`; `main.py` was updated
-to match these new paths.
