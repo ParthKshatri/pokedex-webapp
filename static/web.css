@@ -1,0 +1,571 @@
+:root {
+    /* Color Palette */
+    --pokedex-red: #DC0A2D;
+    /* Iconic Pokedex Red */
+    --pokedex-red-dark: #b90824;
+    /* Darker shade for depth */
+    --pokedex-blue: #3B4CCA;
+    /* Pokemon Blue */
+    --pokedex-yellow: #FFDE00;
+    /* Pokemon Yellow (Mustard-ish) */
+    --pokedex-yellow-dark: #B3A125;
+    /* Darker Mustard for borders/accents */
+    --white: #FFFFFF;
+    --off-white: #F5F5F5;
+    --black: #212121;
+    --gray-dark: #333333;
+    --gray-light: #D3D3D3;
+
+    /* Spacing & Layout */
+    --header-height: 80px;
+    --border-radius: 15px;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--off-white);
+    font-family: 'Outfit', sans-serif;
+    color: var(--black);
+    margin: 0;
+    padding-top: var(--header-height);
+    /* Space for fixed navbar */
+}
+
+/* --- Navigation Bar (Pokedex Header) --- */
+nav.navbar {
+    background-color: var(--pokedex-red);
+    height: var(--header-height);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border-bottom: 5px solid var(--black);
+    padding: 0 20px !important;
+    /* Override bootstrap padding */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Left side of Navbar (Logo & Menu) */
+nav .d-flex {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#menu {
+    height: 40px;
+    width: 40px;
+    filter: brightness(0) invert(1);
+    /* Make it white */
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+#menu:hover {
+    transform: scale(1.1);
+}
+
+#navimage {
+    height: 50px;
+    width: 50px;
+    filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.2));
+}
+
+#logot {
+    color: var(--white);
+    font-weight: 700;
+    font-size: 2rem;
+    margin: 0;
+    text-shadow: 3px 3px 0 var(--pokedex-blue);
+    letter-spacing: 1px;
+    /* Remove old borders */
+    border: none;
+    border-radius: 0;
+    padding: 0;
+}
+
+/* Right side of Navbar (Search & Actions) */
+nav>div:last-child {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Camera Icon */
+#camera {
+    height: 32px;
+    width: 32px;
+    filter: brightness(0) invert(1);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#camera:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Search Input */
+#searchInput {
+    background-color: var(--white);
+    border: 2px solid var(--black);
+    border-radius: 25px;
+    padding: 8px 20px;
+    font-size: 1rem;
+    outline: none;
+    width: 250px;
+    transition: all 0.3s ease;
+}
+
+#searchInput:focus {
+    border-color: var(--pokedex-yellow);
+    box-shadow: 0 0 0 3px rgba(255, 222, 0, 0.4);
+}
+
+/* Common Button Styles */
+button {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+/* Navbar Search Button */
+nav button {
+    background-color: var(--pokedex-blue);
+    color: var(--white);
+    border: 2px solid var(--black);
+    border-radius: 25px;
+    padding: 8px 20px;
+}
+
+nav button:hover {
+    background-color: #2a3aa5;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Main Content Area --- */
+h3 {
+    margin: 40px 20px 20px;
+    font-weight: 700;
+    color: var(--gray-dark);
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 3px solid var(--pokedex-yellow);
+    display: inline-block;
+}
+
+#result,
+#function-grid,
+#team-grid,
+#storage {
+    padding: 0 20px 40px;
+    /* Determine grid behavior */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+/* Default state for empty result div to not take space */
+#result:empty {
+    padding: 0;
+}
+
+/* --- Pokemon Cards --- */
+.function-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 2px solid transparent;
+
+    /* Reset button defaults */
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1.1;
+    /* Slightly taller than wide */
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.function-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--pokedex-blue);
+}
+
+.function-card img {
+    width: 90%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.1));
+    transition: transform 0.3s ease;
+}
+
+.function-card:hover img {
+    transform: scale(1.1);
+}
+
+/* Text inside card (strong tag) */
+.function-card .mt-2 {
+    margin-top: 10px !important;
+    font-size: 1.1rem;
+    color: var(--gray-dark);
+    text-transform: capitalize;
+}
+
+/* Wrapper for card + remove button */
+.function-card-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1.1;
+    transition: all 0.3s ease;
+}
+
+.function-card-wrapper:hover {
+    transform: translateY(-5px);
+}
+
+.function-card-wrapper .function-card {
+    width: 100%;
+    height: 100%;
+}
+
+/* Remove Button Styles */
+.remove-btn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: var(--pokedex-red);
+    color: var(--white);
+    border: 2px solid var(--black);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    padding: 0;
+    line-height: 1;
+    transition: all 0.2s ease;
+    opacity: 0;
+    /* Hidden by default */
+    transform: scale(0.8);
+}
+
+.function-card-wrapper:hover .remove-btn {
+    opacity: 1;
+    /* Show on hover */
+    transform: scale(1);
+    top: -10px;
+    right: -10px;
+}
+
+.remove-btn:hover {
+    background-color: var(--pokedex-red-dark);
+    transform: scale(1.2) !important;
+}
+
+/* Fix for double hover effect in Team/Storage grids */
+.function-card-wrapper:hover .function-card {
+    /* Trigger the card styles when wrapper is hovered so they act as one unit */
+    box-shadow: var(--shadow-lg);
+    border-color: var(--pokedex-blue);
+    transform: scale(1.02);
+}
+
+.function-card-wrapper .function-card:hover {
+    /* Reset individual card transform to avoid double jump (wrapper already moves) */
+    transform: scale(1.02);
+}
+
+/* --- Modal Styles (Detailed View) --- */
+.modal-content {
+    border-radius: 20px;
+    border: 4px solid var(--black);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.modal-header {
+    background-color: var(--pokedex-red);
+    color: var(--white);
+    border-bottom: 4px solid var(--black);
+}
+
+.modal-title {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.modal-body {
+    background-color: var(--black);
+    /* Pokedex Screen Background */
+    color: var(--white);
+    text-align: center;
+}
+
+/* Carousel Image Container */
+#imageCarousel {
+    background-color: #5aaaff;
+    /* Sky blue background for pokemon scene */
+    border-bottom: 4px solid var(--black);
+    position: relative;
+    min-height: 250px;
+    display: flex;
+    align-items: center;
+}
+
+.carousel-item img {
+    max-height: 300px;
+    object-fit: contain;
+    padding: 20px;
+    filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.2));
+}
+
+/* Pokemon Details Section */
+#pokemonDetails {
+    background-color: var(--black);
+    color: #4fffa8;
+    /* Terminal Green Text */
+    font-family: 'Consolas', 'Monaco', monospace;
+    /* Digital look */
+    text-align: left;
+    padding: 20px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+#pokemonDetails strong {
+    color: var(--pokedex-yellow);
+}
+
+/* Modal Footer */
+.modal-footer {
+    background-color: var(--pokedex-red);
+    border-top: 4px solid var(--black);
+    justify-content: center;
+}
+
+#add-to-team-btn {
+    background-color: var(--pokedex-yellow);
+    color: var(--black);
+    border: 3px solid var(--black);
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 10px 30px;
+    width: auto;
+    box-shadow: 0 4px 0 var(--pokedex-yellow-dark);
+}
+
+#add-to-team-btn:hover {
+    background-color: #ffe033;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 var(--pokedex-yellow-dark);
+}
+
+#add-to-team-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--pokedex-yellow-dark);
+}
+
+/* --- Offcanvas Menu (Side Menu) --- */
+.offcanvas {
+    border-right: 5px solid var(--black);
+}
+
+.offcanvas-header {
+    background-color: var(--pokedex-red);
+    color: var(--white);
+    border-bottom: 5px solid var(--black);
+}
+
+.offcanvas-body {
+    background-color: var(--off-white);
+    padding: 20px;
+}
+
+.offcanvas-body a {
+    text-decoration: none;
+    display: block;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: var(--white);
+    border-radius: 10px;
+    border: 2px solid var(--gray-light);
+    color: var(--black);
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.offcanvas-body a:hover {
+    background-color: var(--pokedex-blue);
+    color: var(--white);
+    border-color: var(--black);
+    transform: translateX(10px);
+}
+
+.offcanvas-body h3 {
+    margin: 0;
+    /* Override default h3 margin inside links */
+    font-size: 1.2rem;
+    border: none;
+    color: inherit;
+}
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--gray-light);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--pokedex-red);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--pokedex-red-dark);
+}
+
+/* --- Responsive Layout --- */
+@media (max-width: 768px) {
+    #searchInput {
+        width: 150px;
+        /* Smaller search bar on mobile */
+    }
+
+    .function-card {
+        height: auto;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+        margin-top: 30px;
+    }
+}
+
+/* --- Authentication Overlay --- */
+#authOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    /* Slightly less opaque for depth */
+    z-index: 9999;
+    /* Ensure it's on top of EVERYTHING */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    /* Stronger blur */
+}
+
+.auth-box {
+    background: linear-gradient(135deg, var(--pokedex-red) 0%, #b90824 100%);
+    padding: 40px;
+    border-radius: 25px;
+    border: 4px solid var(--black);
+    width: 380px;
+    /* Slightly wider */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 0, 0, 0.2);
+    /* Depth */
+    position: relative;
+    transform: translateY(0);
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.auth-box::before {
+    /* Blue circle indicator like Pokedex cover */
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 15px;
+    height: 15px;
+    background-color: #5aaaff;
+    border-radius: 50%;
+    border: 2px solid var(--black);
+    box-shadow: 0 0 5px #5aaaff;
+}
+
+.auth-box input {
+    background-color: var(--off-white);
+    border: 3px solid var(--black);
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: 600;
+    color: var(--black);
+}
+
+.auth-box input:focus {
+    border-color: var(--pokedex-blue);
+    box-shadow: none;
+}
+
+.auth-box .btn-primary {
+    background-color: var(--pokedex-blue);
+    border: 3px solid var(--black);
+    font-weight: 700;
+    border-radius: 10px;
+}
+
+.auth-box .btn-primary:hover {
+    background-color: #2a3aa5;
+    transform: translateY(-2px);
+}
+
+.auth-box .btn-secondary {
+    background-color: var(--pokedex-yellow);
+    color: var(--black);
+    border: 3px solid var(--black);
+    font-weight: 700;
+    border-radius: 10px;
+}
+
+.auth-box .btn-secondary:hover {
+    background-color: #ffe033;
+    transform: translateY(-2px);
+}

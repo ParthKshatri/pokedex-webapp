@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/web.css">
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <div id="authOverlay" style="display: none;">
+        <div class="auth-box">
+            <h2 class="text-center mb-4" style="color: var(--pokedex-yellow); text-transform: uppercase;">Trainer Login
+            </h2>
+            <form id="authForm" onsubmit="handleLogin(event)">
+                <div class="mb-3">
+                    <input type="text" name="username" class="form-control" placeholder="Trainer Name" required>
+                </div>
+                <div class="mb-3">
+                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mb-2">Login</button>
+                <button type="button" class="btn btn-secondary w-100" onclick="handleRegister()">Register</button>
+            </form>
+            <div id="authMessage" class="mt-3 text-center fw-bold"></div>
+        </div>
+    </div>
+
+    <nav class="navbar p-sticky">
+
+        <div class="d-flex">
+            <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+                aria-controls="offcanvasExample"><img id="menu"
+                    src="static/menu_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png" alt="menu"></a>
+            <img id='navimage' src="static/pokeball-transparent-png-2.png" alt="Poke">
+            <h1 id="logot">Pokedex</h1>
+            <div id="navbarAuthSection" class="ms-3 d-flex align-items-center"></div>
+        </div>
+
+        <div>
+            <div class="dropdown d-inline-block">
+                <img id="camera" src="static/photo_camera_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg" alt="Camera"
+                    role="button" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
+
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <button class="dropdown-item" onclick="openUpload()">
+                            Upload image
+                        </button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" onclick="openCapture()">
+                            Capture image
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <input id="searchInput" type="text" placeholder="Enter Pokémon name or number">
+            <button onclick="searchPokemon()">Search</button>
+        </div>
+
+    </nav>
+
+    <input type="file" id="imageUploadInput" accept="image/*" class="d-none">
+    <input type="file" id="cameraCaptureInput" accept="image/*" capture="environment" class="d-none">
+
+    <h3> Searched POKEMON </h3>
+    <div id="result"></div>
+
+    <h3> ALL POKEMONS </h3>
+    <div id="function-grid" class="function-grid"></div>
+
+    <h3> Your Team </h3>
+    <div id="team-grid" class="function-grid"></div>
+
+    <h3> Storage </h3>
+    <div id="storage" class="function-grid"></div>
+
+    <div class="modal fade" id="imageModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Pokemon</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body p-0">
+
+                    <div id="imageCarousel" class="carousel slide" data-bs-interval="false">
+                        <div class="carousel-inner" id="carouselInner"></div>
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+
+                        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+
+                    </div>
+                    <div class="p-3" id="pokemonDetails">
+                        <p><strong>Number:</strong> <span id="pokeNumber">—</span></p>
+                        <p><strong>Type:</strong> <span id="pokeType">—</span></p>
+                        <p id="pokeDescription">—</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="add-to-team-btn" class="btn btn-success w-100 mt-2" onclick="addToTeam()">Add to
+                        Team</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h1 class="offcanvas-title" id="offcanvasExampleLabel">MENU</h1>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <a href="#result" onclick="scrollToSection(event, 'result')">
+                <h3>Home</h3>
+            </a><br>
+            <a href="#team-grid" onclick="scrollToSection(event, 'team-grid')">
+                <h3>Team</h3>
+            </a><br>
+            <a href="#storage" onclick="scrollToSection(event, 'storage')">
+                <h3>Storage</h3>
+            </a><br>
+            <a href="#about" onclick="scrollToSection(event, 'about')">
+                <h3>About</h3>
+            </a><br>
+        </div>
+    </div>
+
+    <div id="images">
+
+        <script>
+
+            // This comes from FastAPI → Jinja → HTML
+            // Team state (independent of modal & carousel)
+
+            const IMAGES = {{ images | tojson }};
+            const storage = [];
+            const team = [];            // holds Pokémon names (or objects later)
+            const pokemonCache = {};
+            let activeCarouselList = [];
+            const MAX_TEAM_SIZE = 6;
+            let currentPokemon = null;
+
+            const carousel = document.getElementById("imageCarousel");
+            const carouselInner = document.getElementById("carouselInner");
+
+            function buildCarousel(list, startIndex = 0) {
+                carouselInner.innerHTML = "";
+
+                list.forEach((img, index) => {
+                    carouselInner.insertAdjacentHTML(
+                        "beforeend",
+                        `
+                        <div class="carousel-item ${index === startIndex ? "active" : ""}">
+                            <img src="static/pokemon_images/${img}" class="d-block w-100">
+                        </div>
+                        `
+                    );
+                });
+
+                const bsCarousel = bootstrap.Carousel.getOrCreateInstance(carousel);
+                bsCarousel.to(startIndex);
+            }
+
+            carousel.addEventListener("slid.bs.carousel", () => {
+                const activeItem = carouselInner.querySelector(".carousel-item.active img");
+                if (!activeItem) return;
+
+                const src = activeItem.getAttribute("src");
+                const imageName = src.split("/").pop();
+
+                currentPokemon = {
+                    name: imageName.replace(/\.[^/.]+$/, ""),
+                    image: imageName,
+                    index: activeCarouselList.indexOf(imageName)
+                };
+
+                const cleanName = currentPokemon.name
+                    .replace(/^\d+_/, "")
+                    .replace(/_/g, " ")
+                    .toLowerCase();
+
+                if (pokemonCache[cleanName]) {
+                    populatePokemonDetails(pokemonCache[cleanName]);
+                } else {
+                    fetch(`/search?query=${encodeURIComponent(cleanName)}`)
+                        .then(res => res.json())
+                        .then(pokemon => {
+                            if (!pokemon) return;
+                            pokemonCache[cleanName] = pokemon;
+                            populatePokemonDetails(pokemon);
+                        });
+                }
+            });
+
+
+
+
+            function images() {
+                const grid = document.getElementById("function-grid");
+                grid.innerHTML = "";
+
+                for (let i of IMAGES) {
+                    grid.insertAdjacentHTML(
+                        "beforeend",
+                        `
+                    <button class="function-card" data-bs-toggle="modal" data-bs-target="#imageModal" data-image="static/pokemon_images/${i}" data-title="${i}">
+                    
+                    <img  src="static/pokemon_images/${i}" alt="${i}"> </button>
+                    `
+                    );
+                }
+            }
+            images()
+
+
+
+            const imageModal = document.getElementById("imageModal");
+
+            function populatePokemonDetails(pokemon) {
+                document.getElementById("modalTitle").textContent =
+                    `${pokemon.name} (#${pokemon.number})`;
+
+                document.getElementById("pokeNumber").textContent = pokemon.number;
+                document.getElementById("pokeType").textContent = pokemon.type;
+                document.getElementById("pokeDescription").textContent =
+                    pokemon.description;
+            }
+
+            imageModal.addEventListener("show.bs.modal", event => {
+                const button = event.relatedTarget;
+                const imageName = button.getAttribute("data-title");
+
+                let source = "all";
+
+                if (button.closest("#team-grid")) source = "team";
+                else if (button.closest("#storage")) source = "storage";
+
+                if (source === "team") activeCarouselList = [...team];
+                else if (source === "storage") activeCarouselList = [...storage];
+                else activeCarouselList = [...IMAGES];
+
+                const index = activeCarouselList.indexOf(imageName);
+
+                currentPokemon = {
+                    name: imageName.replace(/\.[^/.]+$/, ""),
+                    image: imageName,
+                    index
+                };
+
+                // show name immediately (fallback)
+                document.getElementById("modalTitle").textContent =
+                    currentPokemon.name.toUpperCase();
+
+                buildCarousel(activeCarouselList, index);
+
+                // 🔽 FETCH & SHOW DETAILS
+                const cleanName = currentPokemon.name
+                    .replace(/^\d+_/, "")
+                    .replace(/_/g, " ")
+                    .toLowerCase();
+
+                if (pokemonCache[cleanName]) {
+                    populatePokemonDetails(pokemonCache[cleanName]);
+                } else {
+                    fetch(`/search?query=${encodeURIComponent(cleanName)}`)
+                        .then(res => res.json())
+                        .then(pokemon => {
+                            if (!pokemon) return;
+                            pokemonCache[cleanName] = pokemon;
+                            populatePokemonDetails(pokemon);
+                        });
+                }
+            })
+
+
+
+
+            function send() {
+                const query = document.getElementById("search").value.trim();
+                if (!query) return;
+
+                fetch("/search", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ query: query })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        updateSearchInfo(data);
+                    })
+                    .catch(err => console.error(err));
+            }
+
+
+            // Renders a list of Pokémon dicts ({number, name, type, description})
+            // as clickable cards inside #result, same style as the "ALL POKEMONS" grid.
+            function renderSearchResults(matches) {
+                const result = document.getElementById("result");
+
+                if (!matches || matches.length === 0) {
+                    result.innerHTML = `<p class="text-muted">No Pokémon found.</p>`;
+                    return;
+                }
+
+                result.innerHTML = matches.map(pokemon => {
+                    const index = parseInt(pokemon.number, 10) - 1;
+                    const imgName = IMAGES[index];
+                    if (!imgName) return "";
+
+                    return `
+                        <button
+                            class="function-card"
+                            data-bs-toggle="modal"
+                            data-bs-target="#imageModal"
+                            data-title="${imgName}">
+
+                            <img src="static/pokemon_images/${imgName}" alt="${pokemon.name}">
+                            <div class="mt-2 text-center">
+                                <strong>${pokemon.name}</strong>
+                            </div>
+                        </button>
+                    `;
+                }).join("");
+            }
+
+            let liveSearchTimer = null;
+
+            // Fires on every keystroke: shows every Pokémon whose name/number
+            // contains the typed text anywhere, not just from the start
+            // (e.g. "pi" matches Pikachu, Nidoqueen, Spinarak, Jumpluff...).
+            function liveSearch() {
+                const query = document.getElementById("searchInput").value.trim();
+
+                clearTimeout(liveSearchTimer);
+
+                if (!query) {
+                    document.getElementById("result").innerHTML = "";
+                    return;
+                }
+
+                liveSearchTimer = setTimeout(() => {
+                    fetch(`/search/live?query=${encodeURIComponent(query)}`)
+                        .then(res => res.json())
+                        .then(matches => renderSearchResults(matches))
+                        .catch(err => console.error(err));
+                }, 150); // small debounce so we don't hammer the server every keystroke
+            }
+
+            // Kept for the Search button / Enter key: runs the same live search immediately
+            function searchPokemon() {
+                clearTimeout(liveSearchTimer);
+                const query = document.getElementById("searchInput").value.trim();
+
+                if (!query) {
+                    document.getElementById("result").innerHTML = "";
+                    return;
+                }
+
+                fetch(`/search/live?query=${encodeURIComponent(query)}`)
+                    .then(res => res.json())
+                    .then(matches => renderSearchResults(matches))
+                    .catch(err => console.error(err));
+            }
+
+            // ---------------- AUTHENTICATION LOGIC ----------------
+
+            async function checkLogin() {
+                try {
+                    const res = await fetch("/api/me");
+                    const data = await res.json();
+
+                    if (data.logged_in) {
+                        document.getElementById("authOverlay").style.display = "none";
+                        const navAuth = document.getElementById("navbarAuthSection");
+                        if (navAuth) {
+                            navAuth.innerHTML = `
+                                 <span class="text-white me-3">Hi, ${data.username}</span>
+                                 <button class="btn btn-outline-light btn-sm" onclick="handleLogout()">Logout</button>
+                            `;
+                        }
+                        // Load user data
+                        team.length = 0; // Clear existing
+                        storage.length = 0;
+
+                        data.team.forEach(p => team.push(p));
+                        data.storage.forEach(p => storage.push(p));
+
+                        renderTeamGrid();
+                        renderStorageGrid();
+                    } else {
+                        document.getElementById("authOverlay").style.display = "flex";
+                        const navAuth = document.getElementById("navbarAuthSection");
+                        if (navAuth) navAuth.innerHTML = "";
+                    }
+                } catch (e) {
+                    console.error("Auth check failed", e);
+                }
+            }
+
+            async function handleLogin(event) {
+                event.preventDefault();
+                const form = event.target;
+                const username = form.username.value;
+                const password = form.password.value;
+                const msg = document.getElementById("authMessage");
+
+                try {
+                    const res = await fetch("/api/login", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ username, password })
+                    });
+                    const data = await res.json();
+
+                    if (data.success) {
+                        checkLogin(); // Reload state
+                    } else {
+                        msg.textContent = data.message;
+                        msg.style.color = "red";
+                    }
+                } catch (e) {
+                    msg.textContent = "Login failed";
+                }
+            }
+
+            async function handleRegister() {
+                const form = document.getElementById("authForm");
+                const username = form.username.value;
+                const password = form.password.value;
+                const msg = document.getElementById("authMessage");
+
+                if (!username || !password) {
+                    msg.textContent = "Please fill in all fields";
+                    return;
+                }
+
+                try {
+                    const res = await fetch("/api/register", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ username, password })
+                    });
+                    const data = await res.json();
+
+                    if (data.success) {
+                        msg.textContent = "Registered! Please login.";
+                        msg.style.color = "green";
+                    } else {
+                        msg.textContent = data.message;
+                        msg.style.color = "red";
+                    }
+                } catch (e) {
+                    msg.textContent = "Registration failed";
+                }
+            }
+
+            async function handleLogout() {
+                await fetch("/api/logout", { method: "POST" });
+                location.reload();
+            }
+
+            function addToTeam() {
+                if (!currentPokemon) return;
+
+                const image = currentPokemon.image;
+
+                // Prevent duplicates across both
+                if (team.includes(image) || storage.includes(image)) {
+                    alert("This Pokémon is already added.");
+                    return;
+                }
+
+                if (team.length < MAX_TEAM_SIZE) {
+                    // Optimistic update
+                    team.push(image);
+                    renderTeamGrid();
+
+                    fetch("/api/pokemon/add", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ pokemon_name: image, location: "team" })
+                    }).then(res => res.json()).then(data => {
+                        if (!data.success) {
+                            alert("Failed to save: " + data.message);
+                            location.reload();
+                        }
+                    });
+
+                } else {
+                    storage.push(image);
+                    renderStorageGrid();
+
+                    fetch("/api/pokemon/add", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ pokemon_name: image, location: "storage" })
+                    }).then(res => res.json()).then(data => {
+                        if (!data.success) {
+                            alert("Failed to save: " + data.message);
+                            location.reload();
+                        }
+                    });
+                }
+            }
+
+            function renderTeamGrid() {
+                const teamGrid = document.getElementById("team-grid");
+                teamGrid.innerHTML = "";
+
+                team.forEach((imageName, index) => {
+                    const card = document.createElement("div");
+                    card.className = "function-card-wrapper";
+                    card.style.position = "relative";
+
+                    const btn = document.createElement("button");
+                    btn.className = "function-card";
+
+                    btn.setAttribute("data-bs-toggle", "modal");
+                    btn.setAttribute("data-bs-target", "#imageModal");
+                    btn.setAttribute("data-title", imageName);
+
+                    btn.innerHTML = `
+                          <img src="static/pokemon_images/${imageName}" alt="${imageName}">
+                          <div class="mt-2 text-center">
+                              <strong>${imageName.replace(/\.[^/.]+$/, "")}</strong>
+                          </div>
+                      `;
+
+                    const removeBtn = document.createElement("button");
+                    removeBtn.className = "remove-btn";
+                    removeBtn.innerHTML = "×";
+                    removeBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        removeFromTeam(index);
+                    };
+
+                    card.appendChild(btn);
+                    card.appendChild(removeBtn);
+                    teamGrid.appendChild(card);
+                });
+            }
+
+            function removeFromTeam(index) {
+                const removed = team[index];
+                team.splice(index, 1);
+                renderTeamGrid();
+
+                fetch("/api/pokemon/remove", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ pokemon_name: removed, location: "team" })
+                });
+            }
+
+            function renderStorageGrid() {
+                const storageGrid = document.getElementById("storage");
+                storageGrid.innerHTML = "";
+
+                storage.forEach((imageName, index) => {
+                    const card = document.createElement("div");
+                    card.className = "function-card-wrapper";
+                    card.style.position = "relative";
+
+                    const btn = document.createElement("button");
+                    btn.className = "function-card";
+
+                    btn.setAttribute("data-bs-toggle", "modal");
+                    btn.setAttribute("data-bs-target", "#imageModal");
+                    btn.setAttribute("data-title", imageName);
+
+                    btn.innerHTML = `
+                          <img src="static/pokemon_images/${imageName}" alt="${imageName}">
+                          <div class="mt-2 text-center">
+                              <strong>${imageName.replace(/\.[^/.]+$/, "")}</strong>
+                          </div>
+                      `;
+
+                    const removeBtn = document.createElement("button");
+                    removeBtn.className = "remove-btn";
+                    removeBtn.innerHTML = "×";
+                    removeBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        removeFromStorage(index);
+                    };
+
+                    card.appendChild(btn);
+                    card.appendChild(removeBtn);
+                    storageGrid.appendChild(card);
+                });
+            }
+
+            function removeFromStorage(index) {
+                const removed = storage[index];
+                storage.splice(index, 1);
+                renderStorageGrid();
+
+                fetch("/api/pokemon/remove", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ pokemon_name: removed, location: "storage" })
+                });
+            }
+
+            function scrollToSection(e, id) {
+                e.preventDefault();
+
+                const offcanvas = bootstrap.Offcanvas.getInstance(
+                    document.getElementById("offcanvasExample")
+                );
+
+                const target = document.getElementById(id);
+
+                offcanvas.hide();
+
+                setTimeout(() => {
+                    target.scrollIntoView({ behavior: "smooth" });
+                }, 300); // wait for offcanvas animation
+            }
+
+            function openUpload() {
+                document.getElementById("imageUploadInput").click();
+            }
+
+            function openCapture() {
+                document.getElementById("cameraCaptureInput").click();
+            }
+
+            function handleImage(file) {
+                console.log("handleImage called", file);
+
+                if (!file) return;
+
+                const result = document.getElementById("result");
+
+                // ✅ show preview immediately
+                const previewUrl = URL.createObjectURL(file);
+                result.innerHTML = `
+                      <div class="text-center">
+                          <img src="${previewUrl}" class="img-fluid mb-2" style="max-height:200px;">
+                          <div>Detecting Pokémon...</div>
+                      </div>
+                  `;
+
+                const formData = new FormData();
+                formData.append("file", file);
+
+                console.log("Sending image to backend:", file.name);
+
+                fetch("/detect-image", {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (!data.found) {
+                            document.getElementById("result").textContent =
+                                "No Pokémon detected.";
+                            return;
+                        }
+
+                        // 🔁 fetch full Pokémon data (REUSE /search)
+                        fetch(`/search?query=${encodeURIComponent(data.name)}`)
+                            .then(res => res.json())
+                            .then(pokemon => {
+                                if (!pokemon) {
+                                    document.getElementById("result").textContent =
+                                        "Pokémon data not found.";
+                                    return;
+                                }
+
+                                renderResultButton(pokemon);
+                            });
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        document.getElementById("result").textContent =
+                            "Detection failed.";
+                    });
+            }
+
+            function openPokemonByName(name) {
+                const imgName = IMAGES.find(img =>
+                    img.toLowerCase().includes(name.toLowerCase())
+                );
+
+                if (!imgName) {
+                    alert("Pokémon image not found.");
+                    return;
+                }
+
+                const index = IMAGES.indexOf(imgName);
+
+                currentPokemon = {
+                    name: name,
+                    image: imgName,
+                    index: index
+                };
+
+                const modal = bootstrap.Modal.getOrCreateInstance(
+                    document.getElementById("imageModal")
+                );
+                modal.show();
+
+                const carousel = bootstrap.Carousel.getOrCreateInstance(
+                    document.getElementById("imageCarousel")
+                );
+                carousel.to(index);
+            }
+
+            function renderResultButton(pokemon) {
+                const result = document.getElementById("result");
+
+                if (!pokemon.number) {
+                    result.textContent = "Detected Pokémon data incomplete.";
+                    return;
+                }
+
+                const index = parseInt(pokemon.number, 10) - 1;
+                const imgName = IMAGES[index];
+
+                if (!imgName) {
+                    result.textContent = "Pokémon image not found.";
+                    return;
+                }
+
+                result.innerHTML = `
+                      <button
+                          class="function-card"
+                          data-bs-toggle="modal"
+                          data-bs-target="#imageModal"
+                          data-title="${imgName}">
+                          
+                          <img src="static/pokemon_images/${imgName}" alt="${pokemon.name}">
+                          <div class="mt-2 text-center">
+                              <strong>${pokemon.name}</strong>
+                          </div>
+                      </button>
+                  `;
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+
+                const uploadInput = document.getElementById("imageUploadInput");
+                const captureInput = document.getElementById("cameraCaptureInput");
+                const searchInput = document.getElementById("searchInput");
+
+                if (uploadInput) {
+                    uploadInput.addEventListener("change", e => {
+                        handleImage(e.target.files[0]);
+                    });
+                }
+
+                if (captureInput) {
+                    captureInput.addEventListener("change", e => {
+                        handleImage(e.target.files[0]);
+                    });
+                }
+
+                if (searchInput) {
+                    searchInput.addEventListener("input", liveSearch);
+                    searchInput.addEventListener("keydown", e => {
+                        if (e.key === "Enter") searchPokemon();
+                    });
+                }
+
+            });
+
+            function populatePokemonDetails(pokemon) {
+                document.getElementById("modalTitle").textContent =
+                    `${pokemon.name} (#${pokemon.number})`;
+
+                document.getElementById("pokeNumber").textContent = pokemon.number;
+                document.getElementById("pokeType").textContent = pokemon.type;
+                document.getElementById("pokeDescription").textContent =
+                    pokemon.description;
+            }
+
+
+        </script>
+
+        </script>
+
+        <!-- Login / Signup Overlay -->
+        </script>
+    </div>
+
+    </div>
+    <script>
+        // Check login on load
+        document.addEventListener("DOMContentLoaded", () => {
+            checkLogin();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+152,Chikorita,Grass,Chikorita expresses personality shaped by its Grass nature.
+153,Bayleef,Grass,Bayleef has built its reputation in Johto through its unusual Grass talents.
+154,Meganium,Grass,Meganium expresses personality shaped by its Grass nature.
+155,Cyndaquil,Fire,Cyndaquil stands out due to its strong relationship with Fire energy.
+156,Quilava,Fire,Quilava thrives in Johto thanks to inherent Fire advantages.
+157,Typhlosion,Fire,Encounters with Typhlosion often reveal its signature Fire-style moves.
+158,Totodile,Water,Totodile is admired for consistent performance as a Water Pokémon.
+159,Croconaw,Water,Croconaw thrives in Johto thanks to inherent Water advantages.
+160,Feraligatr,Water,Feraligatr naturally adopts battle styles linked to its Water type.
+161,Sentret,Normal,Encounters with Sentret often reveal its signature Normal-style moves.
+162,Furret,Normal,Furret expresses personality shaped by its Normal nature.
+163,Hoothoot,Normal/Flying,Hoothoot stands out due to its strong relationship with Normal/Flying energy.
+164,Noctowl,Normal/Flying,Noctowl reflects classic characteristics of Normal/Flying-type Pokémon.
+165,Ledyba,Bug/Flying,Trainers value Ledyba for its adaptability and Bug/Flying-based techniques.
+166,Ledian,Bug/Flying,Ledian is admired for consistent performance as a Bug/Flying Pokémon.
+167,Spinarak,Bug/Poison,Spinarak stands out due to its strong relationship with Bug/Poison energy.
+168,Ariados,Bug/Poison,Ariados thrives in Johto thanks to inherent Bug/Poison advantages.
+169,Crobat,Poison/Flying,Crobat expresses personality shaped by its Poison/Flying nature.
+170,Chinchou,Water/Electric,Chinchou is admired for consistent performance as a Water/Electric Pokémon.
+171,Lanturn,Water/Electric,Lanturn reflects classic characteristics of Water/Electric-type Pokémon.
+172,Pichu,Electric,Pichu expresses personality shaped by its Electric nature.
+173,Cleffa,Fairy,Cleffa reflects classic characteristics of Fairy-type Pokémon.
+174,Igglybuff,Normal/Fairy,Igglybuff naturally adopts battle styles linked to its Normal/Fairy type.
+175,Togepi,Fairy,Togepi naturally adopts battle styles linked to its Fairy type.
+176,Togetic,Fairy/Flying,Togetic thrives in Johto thanks to inherent Fairy/Flying advantages.
+177,Natu,Psychic/Flying,Natu stands out due to its strong relationship with Psychic/Flying energy.
+178,Xatu,Psychic/Flying,Xatu exhibits habits that reveal its deep connection to Psychic/Flying traits.
+179,Mareep,Electric,Mareep is admired for consistent performance as a Electric Pokémon.
+180,Flaaffy,Electric,Trainers value Flaaffy for its adaptability and Electric-based techniques.
+181,Ampharos,Electric,Ampharos thrives in Johto thanks to inherent Electric advantages.
+182,Bellossom,Grass,Trainers value Bellossom for its adaptability and Grass-based techniques.
+183,Marill,Water/Fairy,Marill thrives in Johto thanks to inherent Water/Fairy advantages.
+184,Azumarill,Water/Fairy,Azumarill reflects classic characteristics of Water/Fairy-type Pokémon.
+185,Sudowoodo,Rock,Sudowoodo stands out due to its strong relationship with Rock energy.
+186,Politoed,Water,Politoed reflects classic characteristics of Water-type Pokémon.
+187,Hoppip,Grass/Flying,Hoppip expresses personality shaped by its Grass/Flying nature.
+188,Skiploom,Grass/Flying,Encounters with Skiploom often reveal its signature Grass/Flying-style moves.
+189,Jumpluff,Grass/Flying,Trainers value Jumpluff for its adaptability and Grass/Flying-based techniques.
+190,Aipom,Normal,Encounters with Aipom often reveal its signature Normal-style moves.
+191,Sunkern,Grass,Sunkern is admired for consistent performance as a Grass Pokémon.
+192,Sunflora,Grass,Sunflora exhibits habits that reveal its deep connection to Grass traits.
+193,Yanma,Bug/Flying,Yanma is admired for consistent performance as a Bug/Flying Pokémon.
+194,Wooper,Water/Ground,Wooper naturally adopts battle styles linked to its Water/Ground type.
+195,Quagsire,Water/Ground,Quagsire expresses personality shaped by its Water/Ground nature.
+196,Espeon,Psychic,Espeon naturally adopts battle styles linked to its Psychic type.
+197,Umbreon,Dark,Umbreon naturally adopts battle styles linked to its Dark type.
+198,Murkrow,Dark/Flying,Trainers value Murkrow for its adaptability and Dark/Flying-based techniques.
+199,Slowking,Water/Psychic,Slowking naturally adopts battle styles linked to its Water/Psychic type.
+200,Misdreavus,Ghost,Misdreavus stands out due to its strong relationship with Ghost energy.
+201,Unown,Psychic,Unown thrives in Johto thanks to inherent Psychic advantages.
+202,Wobbuffet,Psychic,Wobbuffet expresses personality shaped by its Psychic nature.
+203,Girafarig,Normal/Psychic,Girafarig exhibits habits that reveal its deep connection to Normal/Psychic traits.
+204,Pineco,Bug,Pineco expresses personality shaped by its Bug nature.
+205,Forretress,Bug/Steel,Forretress thrives in Johto thanks to inherent Bug/Steel advantages.
+206,Dunsparce,Normal,Dunsparce naturally adopts battle styles linked to its Normal type.
+207,Gligar,Ground/Flying,Gligar thrives in Johto thanks to inherent Ground/Flying advantages.
+208,Steelix,Steel/Ground,Steelix reflects classic characteristics of Steel/Ground-type Pokémon.
+209,Snubbull,Fairy,Snubbull is admired for consistent performance as a Fairy Pokémon.
+210,Granbull,Fairy,Granbull is admired for consistent performance as a Fairy Pokémon.
+211,Qwilfish,Water/Poison,Qwilfish thrives in Johto thanks to inherent Water/Poison advantages.
+212,Scizor,Bug/Steel,Scizor is admired for consistent performance as a Bug/Steel Pokémon.
+213,Shuckle,Bug/Rock,Encounters with Shuckle often reveal its signature Bug/Rock-style moves.
+214,Heracross,Bug/Fighting,Heracross exhibits habits that reveal its deep connection to Bug/Fighting traits.
+215,Sneasel,Dark/Ice,Encounters with Sneasel often reveal its signature Dark/Ice-style moves.
+216,Teddiursa,Normal,Teddiursa exhibits habits that reveal its deep connection to Normal traits.
+217,Ursaring,Normal,Ursaring thrives in Johto thanks to inherent Normal advantages.
+218,Slugma,Fire,Slugma naturally adopts battle styles linked to its Fire type.
+219,Magcargo,Fire/Rock,Magcargo has built its reputation in Johto through its unusual Fire/Rock talents.
+220,Swinub,Ice/Ground,Trainers value Swinub for its adaptability and Ice/Ground-based techniques.
+221,Piloswine,Ice/Ground,Piloswine stands out due to its strong relationship with Ice/Ground energy.
+222,Corsola,Water/Rock,Corsola has built its reputation in Johto through its unusual Water/Rock talents.
+223,Remoraid,Water,Remoraid expresses personality shaped by its Water nature.
+224,Octillery,Water,Octillery exhibits habits that reveal its deep connection to Water traits.
+225,Delibird,Ice/Flying,Delibird reflects classic characteristics of Ice/Flying-type Pokémon.
+226,Mantine,Water/Flying,Mantine has built its reputation in Johto through its unusual Water/Flying talents.
+227,Skarmory,Steel/Flying,Skarmory thrives in Johto thanks to inherent Steel/Flying advantages.
+228,Houndour,Dark/Fire,Houndour naturally adopts battle styles linked to its Dark/Fire type.
+229,Houndoom,Dark/Fire,Houndoom expresses personality shaped by its Dark/Fire nature.
+230,Kingdra,Water/Dragon,Kingdra naturally adopts battle styles linked to its Water/Dragon type.
+231,Phanpy,Ground,Phanpy thrives in Johto thanks to inherent Ground advantages.
+232,Donphan,Ground,Donphan is admired for consistent performance as a Ground Pokémon.
+233,Porygon2,Normal,Trainers value Porygon2 for its adaptability and Normal-based techniques.
+234,Stantler,Normal,Stantler expresses personality shaped by its Normal nature.
+235,Smeargle,Normal,Trainers value Smeargle for its adaptability and Normal-based techniques.
+236,Tyrogue,Fighting,Tyrogue is admired for consistent performance as a Fighting Pokémon.
+237,Hitmontop,Fighting,Hitmontop expresses personality shaped by its Fighting nature.
+238,Smoochum,Ice/Psychic,Smoochum stands out due to its strong relationship with Ice/Psychic energy.
+239,Elekid,Electric,Elekid naturally adopts battle styles linked to its Electric type.
+240,Magby,Fire,Magby stands out due to its strong relationship with Fire energy.
+241,Miltank,Normal,Miltank has built its reputation in Johto through its unusual Normal talents.
+242,Blissey,Normal,Blissey is admired for consistent performance as a Normal Pokémon.
+243,Raikou,Electric,Raikou is admired for consistent performance as a Electric Pokémon.
+244,Entei,Fire,Entei stands out due to its strong relationship with Fire energy.
+245,Suicune,Water,Suicune is admired for consistent performance as a Water Pokémon.
+246,Larvitar,Rock/Ground,Larvitar reflects classic characteristics of Rock/Ground-type Pokémon.
+247,Pupitar,Rock/Ground,Pupitar naturally adopts battle styles linked to its Rock/Ground type.
+248,Tyranitar,Rock/Dark,Tyranitar reflects classic characteristics of Rock/Dark-type Pokémon.
+249,Lugia,Psychic/Flying,Lugia thrives in Johto thanks to inherent Psychic/Flying advantages.
+250,Ho-Oh,Fire/Flying,Ho-Oh stands out due to its strong relationship with Fire/Flying energy.
+251,Celebi,Psychic/Grass,Celebi is admired for consistent performance as a Psychic/Grass Pokémon.
