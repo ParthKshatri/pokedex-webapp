@@ -5,15 +5,9 @@ from fastapi.templating import Jinja2Templates
 from uuid import uuid4
 import cv2
 import os
+import tempfile
 
 app = FastAPI()
-
-# File handles
-kanto = open("data/kanto_pokedex.txt")
-johto = open("data/johto_region_unique.txt")
-team = open("team.txt", "a+")
-storage = open("storage.txt", "a+")
-
 
 class Pokedex:
     def __init__(self):
@@ -64,25 +58,6 @@ class Pokedex:
                     break
 
         return results
-
-    # ---------------- ADD TO TEAM ----------------
-    def add_to_team(self, pokemon: dict):
-        team.seek(0)
-        count = team.readlines()
-
-        if len(count) >= 6:
-            return "team_full"
-
-        line = (
-            f"Pokemon-Number:{pokemon['number']},"
-            f"Pokemon-Name:{pokemon['name']},"
-            f"Pokemon-type:{pokemon['type']},"
-            f"Pokemon-description:{pokemon['description']}\n"
-        )
-
-        team.write(line)
-        team.flush()
-        return "added"
 
     # ---------------- CAMERA IMAGE MATCH ----------------
     def camera_search_from_image(self, image_path: str):
@@ -199,14 +174,15 @@ def search_live(query: str):
 @app.post("/detect-image")
 async def detect_image(file: UploadFile = File(...)):
     print("DETECT IMAGE ENDPOINT HIT") 
-    os.makedirs("uploads", exist_ok=True)
+    filename = os.path.join(tempfile.gettempdir(), f"{uuid4().hex}.png")
+    try:
+        with open(filename, "wb") as f:
+            f.write(await file.read())
 
-    filename = f"uploads/{uuid4().hex}.png"
-
-    with open(filename, "wb") as f:
-        f.write(await file.read())
-
-    pokemon_name = pokedex.camera_search_from_image(filename)
+        pokemon_name = pokedex.camera_search_from_image(filename)
+    finally:
+        if os.path.exists(filename):
+            os.remove(filename)
 
     if not pokemon_name:
         return {"found": False}
