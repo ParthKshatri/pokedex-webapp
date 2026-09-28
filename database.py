@@ -2,8 +2,11 @@ import sqlite3
 import hashlib
 import uuid
 import os
+import tempfile
 
-DB_NAME = "pokedex.db"
+# Vercel's application bundle is read-only; /tmp allows a temporary SQLite DB.
+# For durable user accounts and teams, replace this with a hosted database.
+DB_NAME = os.path.join(tempfile.gettempdir(), "pokedex.db") if os.getenv("VERCEL") else "pokedex.db"
 
 def init_db():
     conn = sqlite3.connect(DB_NAME)
