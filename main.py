@@ -149,9 +149,9 @@ def home(request: Request):
     image_list = os.listdir("static/pokemon_images")
 
     return templates.TemplateResponse(
-        "index.html",
-        {
-            "request": request,
+        request=request,
+        name="index.html",
+        context={
             "images": image_list,
             "pokemon": None
         }
